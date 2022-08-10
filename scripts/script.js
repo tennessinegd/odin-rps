@@ -1,3 +1,6 @@
+let playerScore = 0;
+let computerScore = 0;
+
 const buttons = document.querySelectorAll(".buttons>button");
 for (let button of buttons) {
     button.addEventListener("click", e => {
@@ -25,21 +28,56 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === "rock" && computerSelection === "scissors"
      || playerSelection === "scissors" && computerSelection === "paper"
      || playerSelection === "paper" && computerSelection === "rock") {
-        return `You win! ${toTitleCase(playerSelection)} beats ${computerSelection.toLowerCase()}!`;
+        return [playerSelection, computerSelection, true];
     } else if (playerSelection === "scissors" && computerSelection === "rock"
             || playerSelection === "paper" && computerSelection === "scissors"
             || playerSelection === "rock" && computerSelection === "paper") {
-        return `You lose! ${toTitleCase(computerSelection)} beats ${playerSelection.toLowerCase()}!`;
+        return [playerSelection, computerSelection, false];
     } else if (playerSelection === computerSelection) {
-        return "It's a draw! Nobody wins!";
+        return null;
     } else {
+        console.error("Invalid game state");
         return;
     }
 }
 
 const resultsParagraph = document.querySelector("#results");
+const scoreParagraph = document.querySelector("#score");
+
 function game(result) {
-    resultsParagraph.textContent = result;
+    let resultString = "";
+
+    if (result === null) {
+        resultString = "It's a draw! Nobody wins!";
+        resultsParagraph.textContent = resultString;
+        scoreParagraph.innerHTML = `Player: ${playerScore}<br><br>Computer: ${computerScore}`;
+        return;
+    }
+
+    const player = result[0];
+    const computer = result[1];
+    const gameWon = result[2];
+
+    if (gameWon) {
+        resultString = `You win! ${toTitleCase(player)} beats ${computer}!`
+        playerScore += 1;
+    } else {
+        resultString = `You lose! ${toTitleCase(computer)} beats ${player}!`
+        computerScore += 1;
+    }
+
+    if (playerScore === 5) {
+        gameEnd(true);
+        return;
+    } else if (computerScore === 5) {
+        gameEnd(false);
+        return;
+    }
+
+    resultsParagraph.textContent = resultString;
+    scoreParagraph.innerHTML = `Player: ${playerScore}<br><br>Computer: ${computerScore}`;
 }
 
-game();
+function gameEnd(gameWon) {
+    alert("Game over!")
+}

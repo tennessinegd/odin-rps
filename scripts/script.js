@@ -78,6 +78,13 @@ function game(result) {
     scoreParagraph.innerHTML = `Player: ${playerScore}<br><br>Computer: ${computerScore}`;
 }
 
+const body = document.querySelector("body");
 function gameEnd(gameWon) {
-    alert("Game over!")
+    while (body.firstElementChild) {
+        body.removeChild(body.firstElementChild);
+    }
+    const endingDiv = document.createElement("div");
+    endingDiv.textContent = gameWon ? "You won the game! Refresh the page to play again."
+                                    : "You lost the game! Refresh the page to play again.";
+    body.appendChild(endingDiv); 
 }

@@ -1,6 +1,8 @@
+// set score variables
 let playerScore = 0;
 let computerScore = 0;
 
+// add event listeners to move buttons
 const buttons = document.querySelectorAll(".moves>img");
 for (let button of buttons) {
     button.addEventListener("click", e => {
@@ -25,6 +27,8 @@ function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
     computerSelection = computerSelection.toLowerCase();
 
+    // check game state
+    // return true if won, false if lost, null if tied, undefined if invalid
     if (playerSelection === "rock" && computerSelection === "scissors"
      || playerSelection === "scissors" && computerSelection === "paper"
      || playerSelection === "paper" && computerSelection === "rock") {
@@ -48,6 +52,7 @@ const computerScoreParagraph = document.querySelector("#computer-score");
 function game(result) {
     let resultString = "";
 
+    // if nobody wins, skip scoring system
     if (result === null) {
         resultString = "It's a draw! Nobody wins!";
         resultsParagraph.textContent = resultString;
@@ -58,6 +63,7 @@ function game(result) {
     const computer = result[1];
     const gameWon = result[2];
 
+    // increase scores
     if (gameWon) {
         resultString = `You win! ${toTitleCase(player)} beats ${computer}!`
         playerScore += 1;
@@ -66,6 +72,7 @@ function game(result) {
         computerScore += 1;
     }
 
+    // check for game end
     if (playerScore === 5) {
         gameEnd(true);
         return;
@@ -81,14 +88,19 @@ function game(result) {
 
 const body = document.querySelector("body");
 function gameEnd(gameWon) {
+    // wipe screen
     while (body.firstElementChild) {
         body.removeChild(body.firstElementChild);
     }
     const endingDiv = document.createElement("div");
     endingDiv.setAttribute("id", "end");
+
+    // custom message based on win condition
     endingDiv.innerHTML = gameWon ? "You won the game!<br><br><span>Click here or refresh the page to play again.</span>"
                                     : "You lost the game!<br><br><span>Click here or refresh the page to play again.</span>";
     endingDiv.addEventListener("click", () => window.location.reload());
+
+    // center the div and show the message
     body.style.justifyContent = "center";
     body.appendChild(endingDiv); 
 }

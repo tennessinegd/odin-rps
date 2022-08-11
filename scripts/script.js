@@ -1,10 +1,10 @@
 let playerScore = 0;
 let computerScore = 0;
 
-const buttons = document.querySelectorAll(".buttons>button");
+const buttons = document.querySelectorAll(".moves>img");
 for (let button of buttons) {
     button.addEventListener("click", e => {
-        const result = playRound(e.target.textContent, getComputerChoice());
+        const result = playRound(e.target.id, getComputerChoice());
         game(result);
     });
 }
@@ -42,7 +42,8 @@ function playRound(playerSelection, computerSelection) {
 }
 
 const resultsParagraph = document.querySelector("#results");
-const scoreParagraph = document.querySelector("#score");
+const playerScoreParagraph = document.querySelector("#player-score");
+const computerScoreParagraph = document.querySelector("#computer-score");
 
 function game(result) {
     let resultString = "";
@@ -50,7 +51,6 @@ function game(result) {
     if (result === null) {
         resultString = "It's a draw! Nobody wins!";
         resultsParagraph.textContent = resultString;
-        scoreParagraph.innerHTML = `Player: ${playerScore}<br><br>Computer: ${computerScore}`;
         return;
     }
 
@@ -75,7 +75,8 @@ function game(result) {
     }
 
     resultsParagraph.textContent = resultString;
-    scoreParagraph.innerHTML = `Player: ${playerScore}<br><br>Computer: ${computerScore}`;
+    playerScoreParagraph.textContent = playerScore;
+    computerScoreParagraph.textContent = computerScore;
 }
 
 const body = document.querySelector("body");
@@ -84,7 +85,10 @@ function gameEnd(gameWon) {
         body.removeChild(body.firstElementChild);
     }
     const endingDiv = document.createElement("div");
-    endingDiv.textContent = gameWon ? "You won the game! Refresh the page to play again."
-                                    : "You lost the game! Refresh the page to play again.";
+    endingDiv.setAttribute("id", "end");
+    endingDiv.innerHTML = gameWon ? "You won the game!<br><br><span>Click here or refresh the page to play again.</span>"
+                                    : "You lost the game!<br><br><span>Click here or refresh the page to play again.</span>";
+    endingDiv.addEventListener("click", () => window.location.reload());
+    body.style.justifyContent = "center";
     body.appendChild(endingDiv); 
 }

@@ -3,16 +3,28 @@
 <head>
     <meta charset="utf=8">
     <title>Odin — Rock Paper Scissors</title>
+    <link rel="stylesheet" href="./style.css">
     <script src="scripts/script.js" defer></script>
 </head>
 <body>
-    <h1>What'll it be?</h1>
-    <div class="buttons">
-        <button id="rock">Rock</button>
-        <button id="paper">Paper</button>
-        <button id="scissors">Scissors</button>
+    <div class="content">
+        <div class="input">
+            <h1>What'll it be?</h1>
+            <div class="moves">
+                <img src="./images/rock.png" alt="Rock" id="rock"></img>
+                <img src="./images/paper.png" alt="Paper" id="paper"></img>
+                <img src="./images/scissors.png" alt="Scissors" id="scissors"></img>
+            </div>
+        </div>
+        <div class="output">
+            <div class="output-container">
+                <p id="results">Click the buttons above to play the game!</p>
+                <p id="score">Player: <span id="player-score">0</span><br><br>Computer: <span id="computer-score">0</span></p>
+            </div>
+        </div>
     </div>
-    <p id="results"></p>
-    <p id="score"></p>
+    <footer>
+        <li>made by Tennessine</li> • <li>source code <a href="https://github.com/tennessinegd/odin-rps">here</a></li> • <li>icons by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></li>
+    </footer>
 </body>
 </html>
